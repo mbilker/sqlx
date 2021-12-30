@@ -138,6 +138,7 @@ fn decode_datetime_from_text(value: &str) -> Option<DateTime<FixedOffset>> {
         "%F %R%:z",
         "%F %T%.fZ",
         "%F %T%.f%:z",
+        "%F %T%.f%#z",
         "%FT%R",
         "%FT%RZ",
         "%FT%R%:z",
