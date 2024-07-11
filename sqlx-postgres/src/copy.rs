@@ -83,6 +83,7 @@ pub trait PgPoolCopyExt {
     /// ### Note
     /// [PgCopyIn::finish] or [PgCopyIn::abort] *must* be called when finished or the connection
     /// will return an error the next time it is used.
+    #[allow(dead_code)]
     fn copy_in_raw<'a>(
         &'a self,
         statement: &'a str,
@@ -107,6 +108,7 @@ pub trait PgPoolCopyExt {
     ///
     /// Command examples and accepted formats for `COPY` data are shown here:
     /// <https://www.postgresql.org/docs/current/sql-copy.html>
+    #[allow(dead_code)]
     fn copy_out_raw<'a>(
         &'a self,
         statement: &'a str,

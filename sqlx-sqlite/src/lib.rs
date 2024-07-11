@@ -64,7 +64,6 @@ use crate::connection::establish::EstablishParams;
 pub(crate) use sqlx_core::driver_prelude::*;
 
 use sqlx_core::describe::Describe;
-use sqlx_core::error::Error;
 use sqlx_core::executor::Executor;
 
 mod arguments;
