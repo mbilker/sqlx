@@ -33,3 +33,31 @@ where
         Self::decode_from_string(Decode::<Sqlite>::decode(value)?)
     }
 }
+
+impl<T> Type<Sqlite> for Vec<Json<T>> {
+    fn type_info() -> SqliteTypeInfo {
+        SqliteTypeInfo(DataType::Text)
+    }
+
+    fn compatible(ty: &SqliteTypeInfo) -> bool {
+        <&str as Type<Sqlite>>::compatible(ty)
+    }
+}
+
+impl<T> Encode<'_, Sqlite> for Vec<Json<T>>
+where
+    T: Serialize,
+{
+    fn encode_by_ref(&self, buf: &mut Vec<SqliteArgumentValue<'_>>) -> Result<IsNull, BoxDynError> {
+        Encode::<Sqlite>::encode(Json(self).encode_to_string()?, buf)
+    }
+}
+
+impl<'r, T> Decode<'r, Sqlite> for Vec<Json<T>>
+where
+    T: 'r + Deserialize<'r>,
+{
+    fn decode(value: SqliteValueRef<'r>) -> Result<Self, BoxDynError> {
+        <Json<Self>>::decode_from_string(Decode::<Sqlite>::decode(value)?).map(|value| value.0)
+    }
+}
